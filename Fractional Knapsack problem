@@ -1,0 +1,84 @@
+/*C code for Fractional Knapsack algorithm using greedy approach*/
+/*Created by: SOUMYA BANERJEE*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int n,i,j,k;
+    float p[100],m,w[100],pw[100],x[100],a[100],u,t=0.0;
+
+    printf("\nEnter the value of n:");
+    scanf("%d",&n);
+    printf("\nEnter profit and weight of each object:\n");
+    for(i=0;i<n;i++)
+    {
+        scanf("%f%f",&p[i],&w[i]);
+        pw[i]=p[i]/w[i];
+        a[i]=i;
+        x[i]=0.0;
+    }
+    printf("\nEnter capacity of knapsack:\n");
+    scanf("%f",&m);
+    for(i=0;i<n-1;i++)
+    {
+        for(j=0;j<n-i-1;j++)
+        {
+            if(pw[j]<pw[j+1])
+            {
+                t=pw[j];
+                pw[j]=pw[j+1];
+                pw[j+1]=t;
+
+                t=p[j];
+                p[j]=p[j+1];
+                p[j+1]=t;
+
+                t=w[j];
+                w[j]=w[j+1];
+                w[j+1]=t;
+
+                t=a[j];
+                a[j]=a[j+1];
+                a[j+1]=t;
+            }
+        }
+    }
+    //for(i=0;i<n;i++)
+    //  printf("%f ",pw[i]);
+    i=0;j=0;
+    while(m>0)
+    {
+        j=a[i];
+        x[j]=1.0;
+        t=t+p[i]*x[j];
+        m=m-w[i];
+        i++;
+    }
+    i=i-1;
+    m=m+w[i];
+    j=a[i];
+    t=t-p[i]*x[j];
+    x[j]=m/w[i];
+    t=t+p[i]*x[j];
+    printf("\nThe solution vector:\n");
+    for(i=0;i<n;i++)
+        printf("%f ",x[i]);
+    printf("\nTotal profit:%f",t);
+    return 0;
+}
+
+OUTPUT:
+Enter the value of n:3
+
+Enter profit and weight of each object:
+60 10
+100 20
+120 30
+
+Enter capacity of knapsack:
+50
+
+The solution vector:
+1.000000 1.000000 0.666667
+Total profit:240.000000
