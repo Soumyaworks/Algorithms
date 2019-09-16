@@ -1,0 +1,74 @@
+/* Created by Soumya Banerjee on 17th September,2019 */
+/* Job sequencing with deadline using greedy*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int j[100],t,p[100],d[100],i,k,n,slot[100],res[100],min,pr=0;
+    printf("Enter n:");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        printf("Enter deadline and profit for job %d=",i+1);
+        scanf("%d%d",&d[i],&p[i]);
+        j[i]=i+1;
+        slot[i]=0;
+    }
+    for(i=0;i<n-1;i++)
+    {
+        for(k=0;k<n-1-i;k++)
+        {
+            if(p[k]<p[k+1])
+            {
+                t=p[k];
+                p[k]=p[k+1];
+                p[k+1]=t;
+
+                t=d[k];
+                d[k]=d[k+1];
+                d[k+1]=t;
+
+                t=j[k];
+                j[k]=j[k+1];
+                j[k+1]=t;
+            }
+        }
+    }
+    for(i=0;i<n;i++)
+    {
+       // min=n<d[i]?n:d[i];
+        for(k=d[i]-1;k>=0;k--)
+        {
+            if(slot[k]==0)
+            {
+                res[k]=i;
+                slot[k]=1;
+                break;
+            }
+        }
+    }
+    for(i=0;i<n;i++)
+    {
+        if(slot[i]==1)
+        {
+            printf("Job%d ",j[res[i]]);
+            pr=pr+p[i];
+        }
+    }
+    printf("\nTotal profit:%d",pr);
+    //printf("Hello world!\n");
+    return 0;
+}
+
+OUTPUT:
+Enter n:7
+Enter deadline and profit for job 1=1 12
+Enter deadline and profit for job 2=4 25
+Enter deadline and profit for job 3=2 20
+Enter deadline and profit for job 4=3 35
+Enter deadline and profit for job 5=4 30
+Enter deadline and profit for job 6=2 5
+Enter deadline and profit for job 7=3 15
+Job3 Job2 Job4 Job5
+Total profit:110
