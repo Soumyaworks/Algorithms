@@ -1,0 +1,134 @@
+/* C code for finding minimum spanning tree using Kruskal's algorithm */
+/* Created by Soumya Banerjee on 17th November,2019 */
+
+CODE :
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int adj[10][10],mst[10][10],u,v,vertex[10],prev[10],n;
+void Make_Set(int val)
+{
+   vertex[val]=val;
+   prev[val]=val;
+}
+int Find_Set(int val)
+{
+    return prev[val];
+}
+void Union_Set(int a,int b)
+{
+    int i,x;
+    x=prev[b];
+    for(i=0;i<n;i++)
+    {
+        if(prev[i]==x)
+            prev[i]=prev[a];
+    }
+}
+
+int main()
+{
+    //printf("Hello world!\n");
+    int i,j,k,p,min,cost=0;
+    printf("\nEnter the number of vertexes :");
+    scanf("%d",&n);
+    printf("\nEnter the cost matrix :");
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            printf("\nEnter weight of edge (%d,%d) = ",i,j);
+            scanf("%d",&adj[i][j]);
+            mst[i][j]=0;
+        }
+    }
+    for(i=0;i<n;i++)
+        Make_Set(i);
+
+    for(p=1;p<=n-1;p++)
+    {
+        min=9999;
+        for(i=0;i<n;i++)
+        {
+            for(j=0;j<n;j++)
+            {
+                if(adj[i][j]<min && adj[i][j]!=0)
+                {
+                    min=adj[i][j];
+                    u=i;
+                    v=j;
+                }
+            }
+        }
+        //adj[u][v]=0;
+        if(Find_Set(u)!=Find_Set(v))
+        {
+            mst[u][v]=adj[u][v];
+            mst[v][u]=adj[u][v];
+            cost+=adj[u][v];
+            Union_Set(u,v);
+
+        }
+        else
+            p--;
+
+        adj[u][v]=0;
+        adj[v][u]=0;
+    }
+    printf("\nThe minimum cost of the MST = %d",cost);
+    printf("\nThe minimum spanning tree matrix :\n");
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+            printf("%d  ",mst[i][j]);
+        printf("\n");
+    }
+    return 0;
+}
+
+
+OUTPUT :
+
+Enter the number of vertexes :4
+
+Enter the cost matrix :
+Enter weight of edge (0,0) = 0
+
+Enter weight of edge (0,1) = 5
+
+Enter weight of edge (0,2) = 4
+
+Enter weight of edge (0,3) = 0
+
+Enter weight of edge (1,0) = 5
+
+Enter weight of edge (1,1) = 0
+
+Enter weight of edge (1,2) = 1
+
+Enter weight of edge (1,3) = 3
+
+Enter weight of edge (2,0) = 4
+
+Enter weight of edge (2,1) = 1
+
+Enter weight of edge (2,2) = 0
+
+Enter weight of edge (2,3) = 2
+
+Enter weight of edge (3,0) = 0
+
+Enter weight of edge (3,1) = 3
+
+Enter weight of edge (3,2) = 2
+
+Enter weight of edge (3,3) = 0
+
+The minimum cost of the MST = 7
+The minimum spanning tree matrix :
+0  0  4  0
+0  0  1  0
+4  1  0  2
+0  0  2  0
+
