@@ -6,7 +6,8 @@ Code :
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-char T[100],P[100],pi[100];;
+char T[100],P[100],pi[100];
+void Compute_Prefix();
 void KMP_Matcher()
 {
     int n,m,q,i,j;
@@ -21,13 +22,13 @@ void KMP_Matcher()
     for(i=0;i<n;i++)
     {
         while(q>0 && P[q]!=T[i])
-            q=pi[q];
+            q=pi[q-1];
         if(P[q]==T[i])
             q=q+1;
         if(q==m)
         {
             printf("\nPattern occurs with shift s = %d",i-m+1);
-            q=pi[q];
+            q=pi[q-1];
         }
     }
 }
@@ -56,6 +57,7 @@ int main()
     KMP_Matcher();
     return 0;
 }
+
 
 OUTPUT :
 
