@@ -1,0 +1,91 @@
+/* C Code for Floyd-Warshall algorithm */
+/* Created by Soumya Banerjee on 27th November, 2019 */
+
+Code :
+
+#include <stdio.h>
+#include <stdlib.h>
+#include<math.h>
+//#include <bits/stdc++.h>
+int main()
+{
+    int c[10][10],a[10][10],i,j,k,n,x;
+    printf("\nEnter the number of vertices :");
+    scanf("%d",&n);
+    printf("\nEnter the cost adjacency matrix:");
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+            scanf("%d",&c[i][j]);
+    }
+    for(i=0;i<n;i++)
+        c[i][i]=0;
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            a[i][j]=c[i][j];
+        }
+    }
+    for(k=0;k<n;k++)
+    {
+        for(i=0;i<n;i++)
+        {
+            for(j=0;j<n;j++)
+            {
+                x=a[i][k]+a[k][j];
+                if(x<a[i][j])
+                    a[i][j]=x;
+            }
+        }
+        printf("\nA[%d] :\n",k);
+        for(i=0;i<n;i++)
+        {
+            for(j=0;j<n;j++)
+                printf("\t%d",a[i][j]);
+            printf("\n");
+        }
+    }
+    printf("Final matrix:\n");
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+            printf("\t%d",a[i][j]);
+        printf("\n");
+    }
+    //printf("Hello world!\n");
+    return 0;
+}
+
+OUTPUT :
+
+Enter the number of vertices :3
+
+Enter the cost adjacency matrix:0
+4
+11
+6
+0
+2
+3
+999
+0
+
+A[0] :
+        0       4       11
+        6       0       2
+        3       7       0
+
+A[1] :
+        0       4       6
+        6       0       2
+        3       7       0
+
+A[2] :
+        0       4       6
+        5       0       2
+        3       7       0
+Final matrix:
+        0       4       6
+        5       0       2
+        3       7       0
