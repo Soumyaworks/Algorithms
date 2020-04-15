@@ -1,6 +1,6 @@
 /* Breadth-first search*/
 /* Created by Soumya Banerjee on 3rd November,2019 */
-/*Code in C : */
+/*Code in C :*/
 
 #include <stdio.h>
 #include <stdlib.h>
